@@ -77,10 +77,6 @@ class Teeko2Player:
                 if temp < i[1]:
                     temp = i[1]
                     succState = i[0]
-        
-        '''#want to use winning move
-        if winningSucc is not None:
-            succState = winningSucc'''
 
         move = []
 
@@ -91,13 +87,14 @@ class Teeko2Player:
                 if drop_phase:
                     if succState[row][col] != state[row][col]:
                         move.append((row, col)) 
-                        return move
-                        #return [(row, col)]
-                #return a list of two tuples, 1 = new position 2 = old position
+                        return move                    
+                
                 else:
                     if succState[row][col] != state[row][col]:
+                        #new position
                         if state[row][col] == " ":
                             move.insert(0, (row , col))
+                        #old position
                         else:
                             move.append((row,col))                     
                       
@@ -138,7 +135,7 @@ class Teeko2Player:
         
         return True
 
-    #using alphabeta pruning
+    #using alpha-beta pruning
     def Min_Val(self, state, depthOfState, finalDepth, alpha, beta):
 
         if self.game_value(state) != 0:
@@ -158,7 +155,7 @@ class Teeko2Player:
     
         return alpha
 
-    #using alphabeta pruning
+    #using alpha-beta pruning
     def Max_Value(self, state, depthOfState, finalDepth, alpha, beta):
 
         if self.game_value(state) != 0:
@@ -426,15 +423,8 @@ class Teeko2Player:
             return 1 if state[1][3] == self.my_piece else -1
         if state[1][4] != ' ' and state[1][4] == state[2][3] == state[3][2] == state[4][1]:
             return 1 if state[1][4] == self.my_piece else -1
-        '''
+    
         # TODO: check diamond wins
-        for row in range(0,2):
-            for col in range(1,3):
-                if state[row][col] != ' ' and state[row][col] == state[row+1][col-1] == state[row+2][col] == state[row+1][col+1] and state[row+1][col] != ' ':
-                #if state[row][col] == ' ' and state[row+1][col] == state[row-1][col] == state[row][col+1] == state[row][col-1]:
-                    return 1 if state[row][col] == self.my_piece else -1'''
-
-         # TODO: check diamond wins
         for row in range(1,4):
             for col in range(1,4):
                 if state[row][col] == ' ' and state[row+1][col] != ' ' and state[row+1][col] == state[row-1][col] == state[row][col+1] == state[row][col-1]:
