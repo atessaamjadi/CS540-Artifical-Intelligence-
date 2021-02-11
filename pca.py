@@ -69,8 +69,5 @@ def main():
 
     display_image(x[3], proj)
 
-
-
-
 if __name__ == '__main__':
     main() 
