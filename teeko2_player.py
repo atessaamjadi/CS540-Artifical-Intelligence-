@@ -45,7 +45,6 @@ class Teeko2Player:
 
      
         # TODO: detect drop phase
-
         drop_phase = self.detectDropPhase(state)
  
         #generate all succ's
@@ -55,7 +54,6 @@ class Teeko2Player:
         winningSucc = None
 
         minSucc = []
-
         
         #calculate game value of each successor
         for succ in succList: 
