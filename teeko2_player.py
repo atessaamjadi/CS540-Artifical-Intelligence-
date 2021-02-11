@@ -88,6 +88,7 @@ class Teeko2Player:
                         return move                    
                 
                 else:
+                    #return a list of two tuples, 0 = new position 1 = old position
                     if succState[row][col] != state[row][col]:
                         #new position
                         if state[row][col] == " ":
