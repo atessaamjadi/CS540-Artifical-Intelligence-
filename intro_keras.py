@@ -4,6 +4,9 @@ import numpy as np
 from tensorflow.keras import layers
 from tensorflow.keras import activations
 
+#gets dataset
+#if training=True, returns training date
+#else returns test data
 def get_dataset(training=True):
     mnist = keras.datasets.mnist
     (train_images, train_labels), (test_images, test_labels) = mnist.load_data()
@@ -11,7 +14,9 @@ def get_dataset(training=True):
         return (train_images, train_labels)
     else:
         return (test_images, test_labels)
-      
+    
+#prints statistics of training data
+#prints number of images, dimension of images, and frequency of each label      
 def print_stats(train_images, train_labels):
     class_names = ['Zero', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine']
     print(train_images.shape[0])
@@ -27,8 +32,9 @@ def print_stats(train_images, train_labels):
     for i in range(len(numbers)):
         print(i, '. ' , class_names[i],' - ', numbers[i], sep="")
 
+#builds neural network model with Flatten and Dense layers   
+#compiles and returns model
 def build_model():
-
     model = keras.Sequential(
         [
             layers.Flatten(input_shape=(28, 28)),
@@ -44,9 +50,11 @@ def build_model():
     model.compile(loss=loss_fn, optimizer=opt, metrics =['accuracy'])
     return model
 
+#trains model
 def train_model(model, train_images, train_labels, T):
     model.fit(x=train_images, y=train_labels, epochs=T)
 
+#evaluates loss and accuracy of model with test data
 def evaluate_model(model, test_images, test_labels, show_loss=True):
     loss, accuracy = model.evaluate(test_images, test_labels, verbose=False)
 
@@ -58,6 +66,8 @@ def evaluate_model(model, test_images, test_labels, show_loss=True):
     
     print('Accuracy: ', format_accuracy, '%', sep="")
 
+#percent predictions of the top three labels of a test image
+# 
 def predict_label(model, test_images, index):
     class_names = ['Zero', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine']
     
@@ -87,34 +97,15 @@ def predict_label(model, test_images, index):
 def main():
     (train_images, train_labels) = get_dataset()
 
-    '''print(type(train_images))
-    print(type(train_labels))
-    print(type(train_labels[0]))'''
     (test_images, test_labels) = get_dataset(False)
-    #print(type(test_images))
-
-    #print_stats(train_images, train_labels)
 
     model = build_model()
-    
-    #model1 = build_model()
-    '''print(model)
-    print(model.loss)
-    print(model.optimizer)
-    print(model.metrics_names)'''
-
-
+ 
     train_model(model, train_images, train_labels, 10)
-
-    #train_model(model1, train_images, train_labels, 10)
 
     evaluate_model(model, test_images, test_labels)
 
-    #evaluate_model(model1, test_images, test_labels, show_loss=False)
-
     predict_label(model, test_images, 1)
-
-
 
 if __name__=="__main__":
     main()
